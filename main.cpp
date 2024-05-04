@@ -1,30 +1,57 @@
-#include <iostream>
-#include <fstream>
 #include "rational/rational.h"
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
-int main() {
+Rational calculateDiscriminant(const Rational a, const Rational b, const Rational c) {
 
-	setlocale(LC_ALL, "RU-ru");
+	Rational D = (b * b) - Rational(4) * a * c;
 
-	Rational a(1, 2), b(-1, 6);
-	cout << "a=" << a << " b=" << b << " a+b=" << a + b << endl;
-	cout << "a(" << a << ") *= b(" << b << ")" << endl;
-	a *= b;
-	cout << "a=" << a << " b=" << b << " a-b=" << a - b << endl;
-	Rational c = 3;
-	cout << "b=" << b << " c=" << c << " b/c=" << b / c << endl;
-	
-	Rational e(7, 8), f(5, 12);
-	cout << "e=" << e << " f=" << f << " e+f=?" << endl;
-	cout << "Введите результат g=m/n в формате: m n" << endl;
-	Rational g;
-	cin >> g;
-	if (e + f != g)
-		cout << "Неправильно! e+f=" << e + f << endl;
-	else
-		cout << "Правильно!" << endl;
+	if (D < Rational(0)) {
+		const char value[] = "negative discriminant";
+		throw value;
+	}
+
+	return D;
+
 }
 
+void calculateRoots(const Rational a, const Rational b, const Rational c,
+		Rational *px1, Rational *px2) {
 
+	try {
+		Rational D = calculateDiscriminant(a, b, c);
+
+		*px1 = (-b + (b * b - Rational(4) * a * c).squareRational())
+			/ (Rational(2) * a);
+
+		*px2 = (-b - (b * b - Rational(4) * a * c).squareRational())
+			/ (Rational(2) * a);
+	}
+	catch (...) {
+		cerr << "Error!";
+	}
+
+	*px1 = (*px1).makeDecimal();
+	*px2 = (*px2).makeDecimal();
+
+}
+
+int main() {
+
+  setlocale(LC_ALL, "RU-ru");
+
+  Rational a;
+  Rational b;
+  Rational c;
+
+  cout << "ax^2 + bx + c = 0" << '\n' << "enter a, b, c to calculate the equation" << endl;
+  cin >> a >> b >> c;
+
+  Rational x1, x2;
+  calculateRoots(a, b, c, &x1, &x2);
+
+  cout << x1 << ' ' << x2;
+
+}

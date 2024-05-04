@@ -5,46 +5,50 @@
 
 using namespace std;
 
-class Rational
-{
+class Rational {
+
+  long double square(long double num);
+  void simplify();
+
 public:
-	int numer;
-	int denom;
+  long double numer;
+  long double denom;
 
-	Rational();
-	Rational(int number);
-	Rational(int n, int d);
+  Rational();
+  Rational(long double number);
+  Rational(long double n, long double d);
 
-	Rational& operator +=(const Rational& r);
-	Rational operator +(const Rational& r) const;
-	Rational operator -(const Rational& r) const;
-	Rational& operator -=(const Rational& r);
-	Rational operator -() const;
-	Rational& operator /=(const Rational& r);
-	Rational& operator *=(const Rational& r);
-	Rational operator /(const Rational& r) const;
-	Rational operator *(const Rational& r) const;
+  Rational makeDecimal();
+  Rational squareRational();
 
-	bool operator ==(const Rational& r) const;
-	bool operator !=(const Rational& r) const;
-	bool operator <(const Rational& r) const;
-	bool operator <=(const Rational& r) const;
-	bool operator >(const Rational& r) const;
-	bool operator >=(const Rational& r) const;
+  Rational &operator+=(const Rational &r);
+  Rational operator+(const Rational &r) const;
+  Rational operator-(const Rational &r) const;
+  Rational &operator-=(const Rational &r);
+  Rational operator-() const;
+  Rational &operator/=(const Rational &r);
+  Rational &operator*=(const Rational &r);
+  Rational operator/(const Rational &r) const;
+  Rational operator*(const Rational &r) const;
 
-	operator int() const;
-	operator double() const;
+  bool operator==(const Rational &r) const;
+  bool operator!=(const Rational &r) const;
+  bool operator<(const Rational &r) const;
+  bool operator<=(const Rational &r) const;
+  bool operator>(const Rational &r) const;
+  bool operator>=(const Rational &r) const;
 
-	void simplify();
+  operator int() const;
+  operator double() const;
 
-	friend ostream& operator <<(ostream& out, const Rational& r);
-	friend istream& operator >>(istream& in, Rational& r);
+  friend ostream &operator<<(ostream &out, const Rational &r);
+  friend istream &operator>>(istream &in, Rational &r);
 
-	Rational& operator ++();
-	Rational operator ++(int);
+  Rational &operator++();
+  Rational operator++(int);
 
-	Rational& operator --();
-	Rational operator --(int);
+  Rational &operator--();
+  Rational operator--(int);
 };
 
 #endif
